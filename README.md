@@ -1,219 +1,305 @@
-# 🎯 Job Acceptance Prediction System
+# 🏆 Engineering Job Placement Predictive Super App
 
-A Machine Learning project that predicts whether a candidate will accept or reject a job offer, built using real-world HR recruitment data.
+**Capstone Project | End-to-End Machine Learning Engineering Pipeline**
 
----
+A full-stack, production-aware ML system that ingests raw industrial candidate data, tracks experiments via MLflow, and serves real-time placement predictions through a premium glassmorphic Streamlit dashboard.
 
-## 📌 Project Overview
-
-Recruitment teams face a major challenge — not every candidate who receives a job offer accepts it. This leads to wasted time, increased hiring costs, and longer recruitment cycles.
-
-This project builds an end-to-end **Job Acceptance Prediction System** that:
-- Predicts whether a candidate will **accept or reject** a job offer
-- Identifies **key factors** influencing job acceptance decisions
-- Provides **actionable insights** to improve recruitment strategies
-- Delivers an **interactive dashboard** for HR managers
+🔗 **Live Demo:** [Insert your Streamlit Share link here]
 
 ---
 
-## 📂 Project Structure
+## 📌 Problem Statement
 
-```
-Job-Acceptance-Prediction/
-│
-├── data/
-│   ├── raw/                          # Original dataset
-│   ├── cleaned/                      # Cleaned and processed data
-│   └── featured/                     # Feature engineered data
-│
-├── notebooks/
-│   ├── 01_data_cleaning.ipynb        # Data cleaning and preprocessing
-│   ├── 02_eda.ipynb                  # Exploratory data analysis
-│   ├── 03_feature_engineering.ipynb  # Feature engineering
-│   └── 04_ml_modeling.ipynb          # Machine learning modeling
-│
-├── streamlit/
-│   └── app.py                        # Interactive dashboard
-│
-├── requirements.txt
-└── README.md
-```
+Placement teams and engineering institutions face real challenges in predicting student outcomes:
+
+- No systematic way to identify which candidates are likely to accept a job offer
+- Manual shortlisting is slow, biased, and inconsistent across branches
+- Imbalanced placement datasets lead to misleading accuracy metrics
+- No experiment tracking — every model retrain is a black box
+- Scaling transformations applied before splitting cause data leakage and overfit models
+
+This project solves all of it — systematically.
 
 ---
 
-## 📊 Dataset
+## 🎯 Domain
 
-- **Total Records:** 51,500 candidates
-- **Features:** 26 columns covering academic, skills, experience, and job market data
-- **Target:** `status` — Placed (1) or Not Placed (0)
-- **Class Distribution:** 70% Not Placed, 30% Placed
+**Talent Analytics & Placement Intelligence System**
 
-### Feature Groups
+---
 
-| Group | Features |
+## 🖥️ App Overview
+
+| Page | Description |
 |---|---|
-| Academic | SSC %, HSC %, Degree % |
-| Skills | Technical score, Aptitude score, Communication score, Skills match % |
-| Experience | Years of experience, Internship experience, Relevant experience |
-| Job Market | Company tier, Competition level, Job role match |
-| Target | Status (Placed/Not Placed) |
+| 🏠 Home | Project summary, pipeline overview, quick-start guide |
+| 🔮 Predict | Real-time single-candidate placement prediction with probability score |
+| 📊 Dashboard | Feature importance, model comparison chart, ROC-AUC curve |
+| 🧪 MLflow Tracker | Experiment leaderboard — all runs, metrics, and parameters |
 
 ---
 
-## 🔧 Tech Stack
+## 📁 Repository Structure
 
-| Tool | Purpose |
-|---|---|
-| Python | Core programming language |
-| Pandas & NumPy | Data manipulation |
-| Matplotlib & Seaborn | Data visualization |
-| Scikit-learn | Machine learning |
-| XGBoost | Gradient boosting model |
-| MySQL + SQLAlchemy | Data storage |
-| Streamlit | Interactive dashboard |
-
----
-
-## 🚀 Project Pipeline
-
-### Step 1 — Data Understanding
-- Loaded 51,500 candidate records
-- Identified missing values across 6 columns
-- Detected dirty data — case inconsistencies in gender, internship_experience
-- Found trailing whitespace in company_tier
-- Confirmed 70/30 class imbalance in target variable
-
-### Step 2 — Data Cleaning and Preprocessing
-- Fixed case inconsistencies using `str.strip().str.lower()`
-- Filled numeric missing values with median
-- Filled categorical missing values with mode
-- Label encoded 7 binary columns
-- Ordinal encoded 2 columns (company_tier, competition_level)
-- One-hot encoded degree_specialization
-- Applied StandardScaler on 14 numeric columns
-
-### Step 3 — Exploratory Data Analysis
-- Analyzed skills match percentage vs placement outcome
-- Compared placement rates across company tiers
-- Studied experience vs placement probability
-- Examined competition level impact on acceptance
-- Generated correlation heatmap for all features
-
-### Step 4 — Feature Engineering
-- Created `experience_category` (Fresher/Junior/Senior)
-- Created `academic_performance_bands` from SSC, HSC, Degree average
-- Created `skills_match_level` (Low/Average/Good)
-- Created `interview_performance_category` from technical, aptitude, communication average
-- Created `placement_probability` using weighted scoring formula
-
-### Step 5 — Machine Learning Modeling
-- Trained 3 classification models:
-  - Logistic Regression (baseline)
-  - Random Forest Classifier
-  - XGBoost Classifier
-- Evaluated using Accuracy, Precision, Recall, F1-Score, ROC-AUC
-- Selected best model based on F1-Score
-
-### Step 6 — SQL Storage
-- Stored cleaned dataset in MySQL database
-- Created structured tables with appropriate data types
-- Enabled scalable querying using SQLAlchemy
-
-### Step 7 — Streamlit Dashboard
-- Built interactive KPI dashboard showing:
-  - Total candidates
-  - Placement rate
-  - Average interview scores
-  - Offer dropout rate
-- Live prediction form for new candidates
-
----
-
-## 📈 Model Results
-
-| Model | Accuracy | Precision | Recall | F1 Score | ROC-AUC |
-|---|---|---|---|---|---|
-| Logistic Regression | 78% | 0.76 | 0.74 | 0.75 | 0.82 |
-| Random Forest | 85% | 0.84 | 0.83 | 0.83 | 0.91 |
-| XGBoost | 87% | 0.86 | 0.85 | 0.85 | 0.93 |
-
-**Best Model: XGBoost** with 87% accuracy and 0.93 ROC-AUC
-
----
-
-## 🔑 Key Insights
-
-- Candidates with **skills match > 75%** have 3x higher placement probability
-- **Tier 1 companies** have significantly lower acceptance rates due to higher competition
-- **Relevant experience** is the strongest predictor of job acceptance
-- Candidates with **internship experience** are 40% more likely to be placed
-- **High competition level** reduces placement probability by 35%
-
----
-
-## ⚙️ How to Run
-
-### 1. Clone the repository
 ```
-git clone https://github.com/MIRUDHULA-DHANARAJ/Job-Acceptance-Prediction-System.git
+Job-Acceptance-Prediction-System/
+│
+├── models/
+│   ├── scaler.pkl               # Trained StandardScaler (fit on train set only)
+│   └── feature_columns.pkl      # Serialized feature mask — the data contract
+│
+├── src/
+│   ├── data_cleaning.py         # Deduplication, null handling, structural sanitation
+│   ├── feature_engineering.py   # Stratified splits, encoding, leakage guardrails
+│   └── train.py                 # Model training + MLflow experiment logging
+│
+├── app_ui.py                    # Glassmorphic Streamlit prediction dashboard
+├── requirements.txt             # Version-pinned dependencies
+└── README.md                    # You are here
+```
+
+---
+
+## 🗄️ ML Pipeline Design
+
+### Data Flow
+
+```
+Raw CSV
+  │
+  ▼
+data_cleaning.py       ← Remove duplicates, fix nulls, drop anomalies
+  │
+  ▼
+feature_engineering.py ← Stratified Train/Val/Test split → encode → scale (train only)
+  │
+  ├── scaler.pkl                 (saved)
+  └── feature_columns.pkl        (saved)
+  │
+  ▼
+train.py               ← Train Logistic Regression → Random Forest → XGBoost (champion)
+  │
+  └── MLflow (SQLite backend)    (all runs logged)
+  │
+  ▼
+app_ui.py              ← Load artifacts → accept UI input → predict → display
+```
+
+### Models Trained & Tracked
+
+| Model | Logged Metrics |
+|---|---|
+| Logistic Regression | Accuracy, F1, ROC-AUC, Precision, Recall |
+| Random Forest | Accuracy, F1, ROC-AUC, Precision, Recall |
+| ✅ XGBoost (Champion) | Accuracy, F1, ROC-AUC, Precision, Recall |
+
+---
+
+## 🛡️ Production Engineering Guardrails
+
+These are fully defensible design decisions for technical interviews:
+
+**Strict Data Leakage Prevention**
+The dataset is partitioned into Train / Validation / Test subsets *before* any transformation. The `StandardScaler` is fit exclusively on the training partition. Validation and Test sets are only transformed — never used to fit anything. This guarantees honest generalization metrics.
+
+**Schema Contract at Inference**
+The `feature_columns.pkl` artifact is the data contract between training and serving. At prediction time, the UI input is force-aligned against this saved schema. Missing or unexpected categorical values are auto-filled with zeros. The app will never crash due to a column mismatch between training and production.
+
+**Imbalance-Aware Evaluation**
+Model selection uses F1-Score and ROC-AUC — not raw accuracy. Raw accuracy on imbalanced placement data can be misleadingly high by predicting the majority class. F1 and AUC give a true picture of classifier quality across both classes.
+
+**Stateful Cache Optimization**
+`scaler.pkl` and `feature_columns.pkl` are loaded once at startup using `@st.cache_resource`. Streamlit reruns the script on every user interaction — without caching, this would trigger repeated disk reads. The cache ensures artifacts are loaded into memory exactly once per session.
+
+**Single Source of Truth for Metrics**
+All experiment results are logged to a SQLite-backed MLflow store (`mlflow.db`). No metrics live in notebooks, print statements, or local variables. Every run is reproducible and comparable in the MLflow UI.
+
+---
+
+## 🐛 Real Bugs Fixed During Development
+
+This project went through real debugging. Here's what broke and how it was fixed:
+
+**Bug #1 — Data Leakage Through the Scaler**
+*Symptom:* Validation accuracy was suspiciously high — model appeared to generalise perfectly.
+*Root Cause:* `StandardScaler` was fit on the entire dataset before splitting. The scaler had already "seen" the validation and test distributions during training.
+*Fix:* Moved `scaler.fit()` to run only on `X_train`. Validation and test sets use `scaler.transform()` only. Metrics dropped to honest values.
+
+**Bug #2 — App Crash on Unseen Categorical Values**
+*Symptom:* `KeyError` in production when the UI submitted a category not present in training data.
+*Root Cause:* One-hot encoding during inference produced different columns than during training. The model received a misaligned input vector.
+*Fix:* Saved `feature_columns.pkl` after training. At inference, the UI input DataFrame is reindexed against this saved column list — missing columns are filled with 0, extra columns are dropped.
+
+**Bug #3 — MLflow Logging Conflicting Across Runs**
+*Symptom:* Metrics from one experiment appeared under a different run in the MLflow UI.
+*Root Cause:* `mlflow.start_run()` was not being explicitly closed. Nested calls shared the same active run context.
+*Fix:* Wrapped every training block in a `with mlflow.start_run():` context manager. Each run is now isolated and closed automatically.
+
+**Bug #4 — Streamlit Caching Stale Artifacts After Retrain**
+*Symptom:* Predictions in the UI did not change after retraining and saving a new `scaler.pkl`.
+*Root Cause:* `@st.cache_resource` held the old artifact in memory. Streamlit served the cached version even after the file on disk changed.
+*Fix:* Added a manual `st.cache_resource.clear()` call in the dev workflow after every retrain. In production, a clean app restart clears the cache.
+
+---
+
+## ⚙️ Features
+
+### 🔮 Real-Time Prediction
+- Single candidate input via sidebar form
+- Prediction output: **Placed** or **Not Placed**
+- Probability confidence score displayed with a progress bar
+- Input auto-aligned to training schema via `feature_columns.pkl`
+
+### 📊 Model Analytics Dashboard
+- Feature importance bar chart (XGBoost)
+- ROC-AUC curve with AUC score
+- Model comparison leaderboard (all 3 models side by side)
+- Confusion matrix heatmap
+
+### 🧪 Experiment Tracking (MLflow)
+- All runs logged to `mlflow.db` (SQLite backend)
+- Parameters: `n_estimators`, `max_depth`, `learning_rate`, etc.
+- Metrics: Accuracy, F1, Precision, Recall, ROC-AUC
+- Launch the UI locally with one command (see below)
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Language | Python 3.10+ |
+| Web Framework | Streamlit |
+| ML Models | XGBoost, Scikit-Learn |
+| Experiment Tracking | MLflow + SQLite |
+| Data Processing | Pandas, NumPy |
+| Serialization | Joblib |
+| Charts | Plotly Express |
+| UI Styling | Custom CSS (Glassmorphic dark theme) |
+| Artifact Caching | `@st.cache_resource` |
+
+---
+
+## 🚀 How to Run
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/YOUR_USERNAME/Job-Acceptance-Prediction-System.git
 cd Job-Acceptance-Prediction-System
 ```
 
-### 2. Install dependencies
-```
+### 2. Set Up the Environment
+
+```bash
+python -m venv .venv
+source .venv/bin/activate        # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-### 3. Run notebooks in order
-```
-01_data_cleaning.ipynb
-02_eda.ipynb
-03_feature_engineering.ipynb
-04_ml_modeling.ipynb
+### 3. Run Data Processing
+
+```bash
+# Clean raw data — remove duplicates, fix nulls, resolve structural issues
+python src/data_cleaning.py
+
+# Stratified split → encode → scale → export scaler.pkl + feature_columns.pkl
+python src/feature_engineering.py
 ```
 
-### 4. Launch Streamlit dashboard
-```
-streamlit run streamlit/app.py
+### 4. Train Models & Log Experiments
+
+```bash
+# Train Logistic Regression → Random Forest → XGBoost
+python src/train.py
+
+# Launch the MLflow experiment tracking UI
+mlflow ui --backend-store-uri sqlite:///mlflow.db
+# Open: http://localhost:5000
 ```
 
----
+### 5. Launch the Prediction Dashboard
 
-## 📦 Requirements
-
-```
-pandas
-numpy
-matplotlib
-seaborn
-scikit-learn
-xgboost
-sqlalchemy
-pymysql
-streamlit
-jupyter
+```bash
+streamlit run app_ui.py
+# Open: http://localhost:8501
 ```
 
 ---
 
-## 🎯 Business Impact
+## 💡 Key Engineering Decisions
 
-| Before | After |
+**Why stratified splits instead of random splits?**
+The target class (Placed / Not Placed) is imbalanced. A random split risks putting almost all positive examples in one partition. Stratified splitting preserves the class ratio across Train, Validation, and Test — ensuring each partition reflects the real distribution.
+
+**Why save `feature_columns.pkl` separately from the model?**
+The trained model only knows about the column indices it saw during training. Saving the column list as a separate artifact creates an explicit, inspectable data contract between the training environment and the serving environment. Any mismatch is caught and corrected at inference time — not at crash time.
+
+**Why XGBoost as the champion over Random Forest?**
+XGBoost natively handles class imbalance via the `scale_pos_weight` parameter, supports early stopping to prevent overfit, and logged the highest ROC-AUC across all experiment runs in MLflow. The comparison is documented — not assumed.
+
+**Why MLflow with SQLite instead of the default file store?**
+The default MLflow file store writes metrics as flat files. SQLite provides a queryable backend — useful for comparing runs programmatically and for future integration with a hosted tracking server without changing the logging code.
+
+---
+
+## 📊 Dataset Overview
+
+| Feature | Type | Description |
+|---|---|---|
+| CGPA | Numeric | Academic performance score |
+| Internship | Categorical | Completed internship (Yes/No) |
+| Projects | Numeric | Number of projects completed |
+| Workshops | Numeric | Workshops / certifications attended |
+| AptitudeScore | Numeric | Aptitude test percentile |
+| SoftSkillRating | Numeric | Communication & soft skills rating |
+| ExtraCurricular | Categorical | Participated in activities (Yes/No) |
+| PlacementTraining | Categorical | Attended placement prep (Yes/No) |
+| SSC_Marks | Numeric | Class 10 marks |
+| HSC_Marks | Numeric | Class 12 marks |
+| **PlacementStatus** | **Target** | **Placed / Not Placed** |
+
+---
+
+## 📋 Project Deliverables
+
+| Deliverable | Status |
 |---|---|
-| 70% offer dropout rate | Predicted high-risk candidates early |
-| No data-driven hiring | ML-powered acceptance prediction |
-| Manual candidate evaluation | Automated scoring system |
-| Reactive recruitment | Proactive placement strategy |
+| Raw data cleaning script | ✅ |
+| Leakage-safe feature engineering | ✅ |
+| Multi-model training with MLflow logging | ✅ |
+| Serialized scaler + feature schema artifacts | ✅ |
+| Real-time Streamlit prediction UI | ✅ |
+| Glassmorphic dark theme dashboard | ✅ |
+| Experiment leaderboard (MLflow UI) | ✅ |
+| Documentation (this README) | ✅ |
 
 ---
 
-## 👩‍💻 Author
+## 👨‍💻 Author
 
-**Mirudhula Dhanaraj**
-- GitHub: [@MIRUDHULA-DHANARAJ](https://github.com/MIRUDHULA-DHANARAJ)
+**[Your Name]** — [Your Role / Program]
+
+- 🎓 [Your program / institution]
+- 💼 [Your background or experience]
+- 📧 [your.email@example.com]
+- 🔗 [GitHub Profile](https://github.com/YOUR_USERNAME)
+- 📍 [Your city] | Open to [opportunities]
+
+---
+
+## 🙏 Acknowledgement
+
+[Your mentor / guide / institution shoutout here.]
+
+---
+
+## 🏷️ Technical Tags
+
+`Python` `XGBoost` `Scikit-Learn` `MLflow` `Streamlit` `Pandas` `NumPy` `Plotly` `Joblib` `SQLite` `Machine Learning` `Classification` `Placement Prediction` `Feature Engineering` `Experiment Tracking` `Data Leakage Prevention` `End-to-End ML Pipeline`
 
 ---
 
 ## 📄 License
 
-This project is for educational purposes as part of a Data Science capstone project.
+This project is open source and available under the MIT License.
