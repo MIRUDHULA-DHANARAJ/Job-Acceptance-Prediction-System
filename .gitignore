@@ -1,0 +1,17 @@
+# data
+data/raw/*.csv
+data/processed/*
+
+# mlflow
+mlruns/
+mlflow.db
+models/
+
+# python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# env
+.env
