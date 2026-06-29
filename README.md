@@ -4,7 +4,7 @@
 
 A full-stack, production-aware ML system that ingests raw industrial candidate data, tracks experiments via MLflow, and serves real-time placement predictions through a premium glassmorphic Streamlit dashboard.
 
-🔗 **Live Demo:** [Insert your Streamlit Share link here]
+🔗 **Live Demo:** https://job-acceptance-prediction-system-app.streamlit.app/
 
 ---
 
@@ -278,19 +278,12 @@ The default MLflow file store writes metrics as flat files. SQLite provides a qu
 
 ## 👨‍💻 Author
 
-**[Your Name]** — [Your Role / Program]
-
-- 🎓 [Your program / institution]
-- 💼 [Your background or experience]
-- 📧 [your.email@example.com]
-- 🔗 [GitHub Profile](https://github.com/YOUR_USERNAME)
-- 📍 [Your city] | Open to [opportunities]
+**Mirudhula D** 
+-
 
 ---
 
-## 🙏 Acknowledgement
 
-[Your mentor / guide / institution shoutout here.]
 
 ---
 
